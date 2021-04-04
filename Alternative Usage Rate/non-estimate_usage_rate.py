@@ -95,6 +95,12 @@ p1 = frame['PLAYER1_NAME'].tolist()
 p2 = frame['PLAYER2_NAME'].tolist()
 event_type = frame['EVENTMSGTYPE'].tolist()
 
+#initialize dictionaries for tracking individual stats and team stats while playing 
+h_values = [{'fga':0,'fta':0,'tov':0,'tmfga':0,'tmfta':0,'tmtov':0} for i in range(len(home_players))]
+home_track = dict(zip(home_players, h_values))
+a_values = [{'fga':0,'fta':0,'tov':0,'tmfga':0,'tmfta':0,'tmtov':0} for i in range(len(away_players))] 
+away_track = dict(zip(away_players, a_values))
+
 #current lineup tracker
 def updateLineup(current_lineup, player, leave = False):
     if leave == False: current_lineup.append(player)
@@ -125,12 +131,6 @@ def calculateUsageRate(track):
             p_dict['usg'] = str(round(100*(num/den),1))+'%'
         track.update({player:p_dict})
     return track
-
-#initialize dictionaries for tracking individual stats and team stats while playing 
-h_values = [{'fga':0,'fta':0,'tov':0,'tmfga':0,'tmfta':0,'tmtov':0} for i in range(len(home_players))]
-home_track = dict(zip(home_players, h_values))
-a_values = [{'fga':0,'fta':0,'tov':0,'tmfga':0,'tmfta':0,'tmtov':0} for i in range(len(away_players))] 
-away_track = dict(zip(away_players, a_values))
 
 quarters = per_quarter_starters['PERIOD'].unique()
 for q in quarters: #looping through each quarter
